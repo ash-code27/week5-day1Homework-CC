@@ -1,8 +1,5 @@
-# colletion_env
-# __pycache__
-# env
+venv
 
-app.db
 __pycache__
 migrations
 .env

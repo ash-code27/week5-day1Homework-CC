@@ -55,11 +55,11 @@ class User(db.Model,UserMixin):
         return f'User {self.email} has been added to the database'
 
 class Car(db.Model):
-    id = db.Column(db.Integer, primary_key = True)
-    year = db.Column(db.Integer)
+    id = db.Column(db.String, primary_key = True)
+    year = db.Column(db.String(150))
     make = db.Column(db.String(200), nullable = True)
     model = db.Column(db.String(200))
-    type = db.Column(db.String(200))
+    transmission = db.Column(db.String(200))
     color = db.Column(db.String(150))
     date_created = date_created = db.Column(db.DateTime, nullable = False, default = datetime.utcnow)
     user_token = db.Column(db.String, db.ForeignKey('user.token'), nullable = False)
@@ -67,11 +67,12 @@ class Car(db.Model):
 
 
 
-    def __init__(self,year, make, model, type, color, user_token, id = ''):
+    def __init__(self,year, make, model, transmission, color, user_token, id = ''):
         self.id = self.set_id()
         self.year = year
-        self.make = model
-        self.type = type
+        self.make = make
+        self.model = model
+        self.transmission = transmission
         self.color = color
         self.user_token = user_token
 
@@ -86,9 +87,13 @@ class Car(db.Model):
 # Creation of API Schema via the marshmallow package
 class CarSchema(ma.Schema):
     class Meta:
-        fields = ['id', 'year', 'make', 'model', 'type', 'color']
+        fields = ['id', 'year', 'make', 'model', 'transmission', 'color']
 
 
 
 car_schema = CarSchema()
 cars_schema = CarSchema(many = True)
+
+
+
+
